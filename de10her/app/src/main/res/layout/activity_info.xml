@@ -29,6 +29,8 @@
                 android:layout_height="50dp"/>
 
             <TextView
+                android:textColorLink="#F57C00"
+                android:autoLink="email"
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp"
                 android:paddingBottom="16dp"
