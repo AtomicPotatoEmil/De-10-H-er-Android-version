@@ -1,60 +1,60 @@
 <resources>
     <string name="app_name">De 10 H\'er</string>
     <string name="test">De 10H\'er</string>
-    <string name="info">For os, der trives med forudsigelighed, orden og overblik, er håndtering af en opgave eller aktivitet afhængig
-        af den nødvendige forudsigelighed.
+    <string name="info">Børn, unge og voksne med autisme, ADHD og andre lignende profiler har ofte problemer med forestillingsevnen og de eksekutive
+                        funktioner (planlægning, overblik, prioritering og tidsstyring), og derfor kan \“De 10 H\’er\” appen være en særlig støtte til denne persongruppe.
 
-        \n\nDet er afgørende, at vi får tilstrækkelig information på det rigtige tidspunkt, så vi kan få overblik og minimere
-        uvished og usikkerhed.
+                        \n\nDe 10 H\’er kan forberede os på en kommende opgave eller aktivitet og tydeliggøre krav og forventninger. De kan tilføre mening,
+                        og dermed øge motivationen og reducere stressen.
 
-        \n\nDe 10 h\' er skaber overblik - De giver forudsigelighed og struktur og derved mere ro i hovedet.
-        Det er et vigtigt redskab, når vi oplever verdenen som usammenhængende, forvirrende og kaotisk. De
-        forbereder en kommende opgave eller aktivitet og tydeliggør krav og forventninger.
+                        \n\nFor os, der trives med forudsigelighed, struktur og overblik, er håndteringen af en opgave eller aktivitet afhængig af,
+                        at vi får den nødvendige og tilstrækkelige information på det rigtige tidspunkt.
+                        Vi har brug for hjælp, så vi kan danne overblik og derved minimere uvisheden.
 
-        \n\nDe kan anvendes både i undervisningen, på jobbet og i fritiden - alle steder alle situationer.
+                        \n\nAppen kan anvendes til børn, unge og voksne. Både i skolen, på jobbet, derhjemme og i fritiden.
+                        Skemaet kan udfyldes af personen, der skal bruge det eller af de støttepersoner, der er omkring barnet eller den voksne.
 
-        \n\nBørn, unge og voksne med autisme, ADHD og andre lignende profiler har ofte problemer med forestillingsevnen
-        og de eksekutive funktioner (planlægning, overblik, prioritering og tidsstyring), og derfor kan \“De 10 H\’er\”
-        appen være en særlig støtte til denne persongruppe.
+                        \n\nDe 10 H\’er udgør følgende spørgsmål:
 
-        \n\nDe 10 H\’er udgør følgende spørgsmål:
+                        \n\nHvad skal jeg lave? (Indhold)
+                        \nHvorfor skal jeg lave det? (Mening)
+                        \nHvordan skal jeg lave det? (Metode)
+                        \nHvor skal jeg lave det? (Placering)
+                        \nHvornår  skal jeg lave det? (Tidspunkt)
+                        \nHvor længe skal jeg lave det? (Tidsperspektiv)
+                        \nHvem skal jeg lave det med? (Personer)
+                        \nHvor meget skal jeg lave? (Mængde)
+                        \nHvem kan jeg få hjælp af? (Person)
+                        \nHvad skal jeg bagefter? (Indhold)
 
-        \n\nHvad skal jeg lave? (Indhold)
-        \nHvorfor skal jeg lave det? (Mening)
-        \nHvordan skal jeg lave det? (Metode)
-        \nHvor skal jeg lave det? (Placering)
-        \nHvornår  skal jeg lave det? (Tidspunkt)
-        \nHvor længe skal jeg lave det? (Tidsperspektiv)
-        \nHvem skal jeg lave det med? (Personer)
-        \nHvor meget skal jeg lave? (Mængde)
-        \nHvem kan jeg få hjælp af? (Person)
-        \nHvad skal jeg bagefter? (Indhold)
+                        \nDe 10 H\’er kan være forudsætningen for, at vi kan udfolde vores potentiale optimalt.
 
-        \n\nDe 10 H\’er kan være forudsætningen for, at vi kan udfolde vores potentiale optimalt.
+                        \n\nAt benytte H\'erne er på ingen måde en ny opfindelse. Jeg har sporet dem helt tilbage til Cicero, der talte om 6 H\’er i "De Inventione":
+                        Hvem, hvad, hvor, hvordan, hvorfor, hvornår.
 
-        \n\nAt benytte H\'erne er på ingen måde en ny opfindelse. Jeg har sporet dem helt tilbage til Cicero,
-        der talte om 6 H\’er i
-        \"De Inventione\": Hvem, hvad, hvor, hvordan, hvorfor, hvornår.
+                        \n\nRydyard Kipling, forfatter af Junglebogen, skrev følgende i \“Just So Stories\” fra 1902:
+                        \“Jeg har seks trofaste tjenere. De har lært mig alt, hvad jeg ved. Deres navne er: Hvad, hvorfor, hvor, hvordan, hvornår og hvem.\”
 
-        \n\nRydyard Kipling, forfatter af Junglebogen, skrev følgende i
-        \“Just So Stories\” fra 1902: \“Jeg har seks trofaste tjenere.
-        De har lært mig alt, hvad jeg ved. Deres navne er: Hvad, hvorfor, hvor, hvordan, hvornår og hvem.\"
+                        \n\nDe er sidenhen blevet udbygget med flere H\’er. Et af de H\’er, jeg har tilføjet, er \“Hvem kan jeg få hjælp af?\”.
+                        Det har været en stor hjælp for mig, når jeg gik i stå og ikke kunne komme videre i en aktivitet eller opgave.
 
-        \n\nDe er sidenhen blevet udbygget med flere H\’er. Et af de H\’er, jeg har tilføjet,
-        er \“Hvem kan jeg få hjælp af?\”. Det har været en stor hjælp for mig, når jeg gik i
-        stå og ikke kunne komme videre i en aktivitet eller opgave.
+                        \n\nNår du åbner appen, kommer du direkte ind i skabelonen med de 10 H\’er.
 
-        \n\nNår du åbner appen, kommer du direkte ind i skabelonen med de 10 H\’er.
-        Herfra udfyldes teksten til de enkelte H\’er.
-        Hvis du vælger ikke at udfylde alle 10 H\’er, vil de uudfyldte være blanke i det færdige skema.
-        Når skemaet er færdigudfyldt, kan det både printes og sendes (via mail, SMS og andre understøttede applikationer).
-        Skemaet omdannes til en pdf-fil, så det vil ikke være muligt for modtageren at ændre i teksten. Alle oprettede skemaer gemmes automatisk i appen med titel og dato.
-        Det er muligt at redigere i gemte skemaer.
-        Tryk på det ønskede skema og herefter på redigerknappen.
-        Efterhånden som skemaerne oprettes, vil de fremgå af listen (som vises, når du åbner appen.
-        Det er selvfølgelig også muligt at slette skemaer på listen.
+                        \n\nHerfra udfyldes teksten til de enkelte H\’er.
+                        Hvis du vælger ikke at udfylde alle 10 H\’er, vil de uudfyldte være blanke i det færdige skema.
 
-        \n\nJeg håber, at I vil få fornøjelse af app\'en, og hvis I oplever problemer, har andre spørgsmål eller gode ideer, så send endelig en mail til mig på: anne@overlevelsesguiden.dk
+                        \n\nNår skemaet er færdigudfyldt, kan det både printes og sendes (via mail, SMS eller Air Drop).
+                        Skemaet omdannes til en pdf-fil, så det vil ikke være muligt for modtageren at ændre i teksten.
+                        Alle oprettede skemaer gemmes automatisk i appen med titel og dato.
+
+                        \n\nDet er muligt at redigere i gemte skemaer. Tryk på det ønskede skema og herefter på redigerknappen.
+                        Efterhånden som skemaerne oprettes, vil de fremgå af listen (som vises, når du åbner appen).
+                        Det er selvfølgelig også muligt at slette skemaer på listen.
+
+                        \n\nJeg håber, at I vil få fornøjelse af app\'en, og hvis I oplever problemer, har andre spørgsmål eller gode ideer,
+                        så send endelig en mail til mig på: anne@overlevelsesguiden.dk
+
+
 
 
     </string>
