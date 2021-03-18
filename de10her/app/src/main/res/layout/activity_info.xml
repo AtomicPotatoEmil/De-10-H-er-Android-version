@@ -54,10 +54,11 @@
         android:layout_height="wrap_content">
         <ImageButton
             android:onClick="goBackToMainActivity"
+            android:paddingRight="16dp"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
             android:paddingLeft="16dp"
-            android:background="@color/white"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/back_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
