@@ -1,6 +1,29 @@
 <resources>
     <string name="app_name">De 10 H\'er</string>
     <string name="test">De 10H\'er</string>
+    <string name="annuler">Anuller</string>
+    <string name="title_hint">Indsæt titel</string>
+    <string name="insert_text_hint">Indsæt tekst</string>
+    <string name="ok">OK</string>
+    <string name="h1">Hvad skal jeg lave?</string>
+    <string name="content">(indhold)</string>
+    <string name="h2">Hvorfor skal jeg lave det?</string>
+    <string name="meaning">(mening)</string>
+    <string name="h3">Hvordan skal jeg lave det?</string>
+    <string name="method">(metode)</string>
+    <string name="h4">Hvor skal jeg lave det?</string>
+    <string name="place">(placering)</string>
+    <string name="h5">Hvornår skal jeg lave det?</string>
+    <string name="time">(tidspunkt)</string>
+    <string name="h6">Hvor længe skal jeg lave det?</string>
+    <string name="time_horizont">(tidshorisont)</string>
+    <string name="h7">Hvem skal jeg lave det med?</string>
+    <string name="people">(personer)</string>
+    <string name="h8">Hvor meget skal jeg lave?</string>
+    <string name="amount">(mængde)</string>
+    <string name="h9">Hvem kan jeg få hjælp af?</string>
+    <string name="person">(person)</string>
+    <string name="h10">Hvad skal jeg lave bagefter</string>
     <string name="info">Børn, unge og voksne med autisme, ADHD og andre lignende profiler har ofte problemer med forestillingsevnen og de eksekutive
                         funktioner (planlægning, overblik, prioritering og tidsstyring), og derfor kan \“De 10 H\’er\” appen være en særlig støtte til denne persongruppe.
 
