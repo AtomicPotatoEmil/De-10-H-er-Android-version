@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.De10Her">
-        <activity android:name=".MakeDocumentActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity android:name=".DocumentActivity"></activity>
+        <activity
+            android:name=".MakeDocumentActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".InfoActivity"
             android:screenOrientation="portrait" />

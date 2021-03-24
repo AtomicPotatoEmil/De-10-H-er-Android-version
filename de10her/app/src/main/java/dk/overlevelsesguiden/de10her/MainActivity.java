@@ -73,6 +73,27 @@ public class MainActivity extends AppCompatActivity {
             TextView timeView = (TextView) savedDocumentsView.findViewById(R.id.document_time);
             timeView.setText(document.getTime());
 
+            savedDocumentsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, DocumentActivity.class);
+
+                    intent.putExtra("title", document.getTitle());
+                    intent.putExtra("h1", document.getH1());
+                    intent.putExtra("h2", document.getH2());
+                    intent.putExtra("h3", document.getH3());
+                    intent.putExtra("h4", document.getH4());
+                    intent.putExtra("h5", document.getH5());
+                    intent.putExtra("h6", document.getH6());
+                    intent.putExtra("h7", document.getH7());
+                    intent.putExtra("h8", document.getH8());
+                    intent.putExtra("h9", document.getH9());
+                    intent.putExtra("h10", document.getH10());
+
+                    startActivity(intent);
+                }
+            });
+
 
             savedDocumentsContainer.addView(savedDocumentsView);
         }
