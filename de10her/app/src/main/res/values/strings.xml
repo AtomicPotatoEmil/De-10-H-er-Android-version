@@ -77,4 +77,6 @@
                         \n\nJeg håber, at I vil få fornøjelse af app\'en, og hvis I oplever problemer, har andre spørgsmål eller gode ideer,
                         så send endelig en mail til mig på: anne@overlevelsesguiden.dk
     </string>
+
+    <string name="delete">slet</string>
 </resources>

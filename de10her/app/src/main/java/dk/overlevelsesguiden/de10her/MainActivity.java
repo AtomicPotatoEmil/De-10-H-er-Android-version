@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         savedDocumentsContainer = (LinearLayout)findViewById(R.id.document_button_container);
-
         for (Document document : documents){
             savedDocumentsView = getLayoutInflater().inflate(R.layout.saved_documents_view, null, false);
 
@@ -78,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, DocumentActivity.class);
 
+                    intent.putExtra("documentIndex", documents.indexOf(document));
                     intent.putExtra("title", document.getTitle());
                     intent.putExtra("h1", document.getH1());
                     intent.putExtra("h2", document.getH2());
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             savedDocumentsContainer.addView(savedDocumentsView);
+
         }
         /*
         someList = new int[]{1, 2, 3, 4, 5};

@@ -21,6 +21,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <ImageButton
+            android:onClick="showOptions"
+            android:src="@drawable/options_menu_button_icon"
+            android:id="@+id/options_button"
+            android:layout_alignParentRight="true"
+            android:padding="16dp"
+            android:textColor="@color/main_orange"
+            android:textSize="16sp"
+            android:text="@string/ok"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 
     <ScrollView

@@ -3,11 +3,24 @@ package dk.overlevelsesguiden.de10her;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
-public class DocumentActivity extends AppCompatActivity {
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+
+    private ArrayList<Document> documents;
+
+    private int documentIndex;
 
     private TextView title;
 
@@ -56,6 +69,8 @@ public class DocumentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document);
+
+        documentIndex = getIntent().getIntExtra("documentIndex", 0);
 
         title = (TextView) findViewById(R.id.title);
         title.setText(getIntent().getStringExtra("title"));
@@ -171,11 +186,45 @@ public class DocumentActivity extends AppCompatActivity {
             h10.setText(getIntent().getStringExtra("h10"));
         }
 
-
     }
+
 
     public void goToMainActivity(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+
+    public void showOptions(View view){
+        PopupMenu menu = new PopupMenu(this, view);
+        menu.setOnMenuItemClickListener(this);
+        menu.inflate(R.menu.document_options_menu);
+        menu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete:
+                SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
+                Gson gson = new Gson();
+                String loadJson = preferences.getString("document_array", null);
+                Type type = new TypeToken<ArrayList<Document>>() {}.getType();
+                documents = gson.fromJson(loadJson, type);
+                /*if (documents == null){
+                    documents = new ArrayList<Document>();
+                }*/
+                documents.remove(documentIndex);
+                SharedPreferences.Editor editor = preferences.edit();
+                String saveJson = gson.toJson(documents);
+                editor.putString("document_array", saveJson);
+                editor.apply();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return false;
+        }
     }
 }
