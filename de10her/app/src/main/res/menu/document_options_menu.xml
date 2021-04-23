@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
+        android:icon="@drawable/edit_icon"
+        app:showAsAction="withText|always"
+        android:title="@string/edit"
+        android:id="@+id/edit"
+        />
+    <item
+        android:icon="@drawable/duplicate_icon"
+        app:showAsAction="withText|always"
+        android:title="@string/duplicate"
+        android:id="@+id/duplicate"
+        />
+    <item
+        android:icon="@drawable/delete_icon"
+        app:showAsAction="withText|always"
         android:title="@string/delete"
-        android:id="@+id/delete"/>
+        android:id="@+id/delete"
+    />
+
 </menu>

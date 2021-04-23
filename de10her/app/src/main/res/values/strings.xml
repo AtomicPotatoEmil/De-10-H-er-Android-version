@@ -78,5 +78,9 @@
                         så send endelig en mail til mig på: anne@overlevelsesguiden.dk
     </string>
 
-    <string name="delete">slet</string>
+    <string name="delete">Slet</string>
+    <string name="save">Gem</string>
+    <string name="edit">Rediger</string>
+    <string name="duplicate">Dupliker</string>
+    <string name="copy">Kopi</string>
 </resources>

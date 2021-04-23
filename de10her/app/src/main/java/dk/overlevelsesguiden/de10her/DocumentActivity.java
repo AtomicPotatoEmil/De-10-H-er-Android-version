@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -197,6 +199,9 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
 
     public void showOptions(View view){
         PopupMenu menu = new PopupMenu(this, view);
+        if (Build.VERSION.SDK_INT >= 29) {
+            menu.setForceShowIcon(true);
+        }
         menu.setOnMenuItemClickListener(this);
         menu.inflate(R.menu.document_options_menu);
         menu.show();
@@ -211,10 +216,9 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
                 String loadJson = preferences.getString("document_array", null);
                 Type type = new TypeToken<ArrayList<Document>>() {}.getType();
                 documents = gson.fromJson(loadJson, type);
-                /*if (documents == null){
-                    documents = new ArrayList<Document>();
-                }*/
+
                 documents.remove(documentIndex);
+
                 SharedPreferences.Editor editor = preferences.edit();
                 String saveJson = gson.toJson(documents);
                 editor.putString("document_array", saveJson);
@@ -223,6 +227,39 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.edit:
+                Intent editIntent = new Intent(this, EditOrDuplicateDocumentActivity.class);
+                editIntent.putExtra("document_index", documentIndex);
+                editIntent.putExtra("is_duplicating", false);
+                editIntent.putExtra("title_to_edit", title.getText().toString());
+                editIntent.putExtra("h1_to_edit", h1.getText().toString());
+                editIntent.putExtra("h2_to_edit", h2.getText().toString());
+                editIntent.putExtra("h3_to_edit", h3.getText().toString());
+                editIntent.putExtra("h4_to_edit", h4.getText().toString());
+                editIntent.putExtra("h5_to_edit", h5.getText().toString());
+                editIntent.putExtra("h6_to_edit", h6.getText().toString());
+                editIntent.putExtra("h7_to_edit", h7.getText().toString());
+                editIntent.putExtra("h8_to_edit", h8.getText().toString());
+                editIntent.putExtra("h9_to_edit", h9.getText().toString());
+                editIntent.putExtra("h10_to_edit", h10.getText().toString());
+                startActivity(editIntent);
+                return true;
+            case R.id.duplicate:
+                Intent duplicateIntent = new Intent(this, EditOrDuplicateDocumentActivity.class);
+                duplicateIntent.putExtra("document_index", documentIndex);
+                duplicateIntent.putExtra("is_duplicating", true);
+                duplicateIntent.putExtra("title_to_edit", title.getText().toString()+" "+getString(R.string.copy));
+                duplicateIntent.putExtra("h1_to_edit", h1.getText().toString());
+                duplicateIntent.putExtra("h2_to_edit", h2.getText().toString());
+                duplicateIntent.putExtra("h3_to_edit", h3.getText().toString());
+                duplicateIntent.putExtra("h4_to_edit", h4.getText().toString());
+                duplicateIntent.putExtra("h5_to_edit", h5.getText().toString());
+                duplicateIntent.putExtra("h6_to_edit", h6.getText().toString());
+                duplicateIntent.putExtra("h7_to_edit", h7.getText().toString());
+                duplicateIntent.putExtra("h8_to_edit", h8.getText().toString());
+                duplicateIntent.putExtra("h9_to_edit", h9.getText().toString());
+                duplicateIntent.putExtra("h10_to_edit", h10.getText().toString());
+                startActivity(duplicateIntent);
             default:
                 return false;
         }
