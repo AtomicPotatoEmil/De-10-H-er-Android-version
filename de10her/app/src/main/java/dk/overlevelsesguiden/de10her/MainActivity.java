@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         savedDocumentsContainer = (LinearLayout)findViewById(R.id.document_button_container);
+        /*
         for (Document document : documents){
             savedDocumentsView = getLayoutInflater().inflate(R.layout.saved_documents_view, null, false);
 
@@ -97,6 +98,43 @@ public class MainActivity extends AppCompatActivity {
 
             savedDocumentsContainer.addView(savedDocumentsView);
 
+        }*/
+
+        for (int i = documents.size() - 1; i >= 0; i--){
+            savedDocumentsView = getLayoutInflater().inflate(R.layout.saved_documents_view, null, false);
+
+            TextView titleView = (TextView) savedDocumentsView.findViewById(R.id.document_title);
+            titleView.setText(documents.get(i).getTitle());
+
+            TextView dateView = (TextView) savedDocumentsView.findViewById(R.id.document_date);
+            dateView.setText(documents.get(i).getDate());
+
+            TextView timeView = (TextView) savedDocumentsView.findViewById(R.id.document_time);
+            timeView.setText(documents.get(i).getTime());
+
+            int index = i;
+            savedDocumentsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, DocumentActivity.class);
+
+                    intent.putExtra("documentIndex", documents.indexOf(documents.get(index)));
+                    intent.putExtra("title", documents.get(index).getTitle());
+                    intent.putExtra("h1", documents.get(index).getH1());
+                    intent.putExtra("h2", documents.get(index).getH2());
+                    intent.putExtra("h3", documents.get(index).getH3());
+                    intent.putExtra("h4", documents.get(index).getH4());
+                    intent.putExtra("h5", documents.get(index).getH5());
+                    intent.putExtra("h6", documents.get(index).getH6());
+                    intent.putExtra("h7", documents.get(index).getH7());
+                    intent.putExtra("h8", documents.get(index).getH8());
+                    intent.putExtra("h9", documents.get(index).getH9());
+                    intent.putExtra("h10", documents.get(index).getH10());
+
+                    startActivity(intent);
+                }
+            });
+            savedDocumentsContainer.addView(savedDocumentsView);
         }
         /*
         someList = new int[]{1, 2, 3, 4, 5};
