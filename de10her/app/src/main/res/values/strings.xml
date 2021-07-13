@@ -83,4 +83,7 @@
     <string name="edit">Rediger</string>
     <string name="duplicate">Dupliker</string>
     <string name="copy">Kopi</string>
+    <string name="download">Download</string>
+    <string name="all10hs">Alle 10 h\'er</string>
+    <string name="onlyFilled">Kun de udfyldte</string>
 </resources>

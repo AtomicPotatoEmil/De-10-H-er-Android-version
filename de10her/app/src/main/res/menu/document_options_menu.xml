@@ -15,6 +15,23 @@
         android:id="@+id/duplicate"
         />
     <item
+        android:icon="@drawable/save_icon"
+        app:showAsAction="never"
+        android:title="@string/download"
+        android:id="@+id/downloadOptions"
+        >
+        <menu>
+            <item
+                android:title="@string/all10hs"
+                android:id="@+id/downloadAllHs"
+                />
+            <item
+                android:title="@string/onlyFilled"
+                android:id="@+id/downloadOnlyFilled"
+                />
+        </menu>
+    </item>
+    <item
         android:icon="@drawable/delete_icon"
         app:showAsAction="withText|always"
         android:title="@string/delete"

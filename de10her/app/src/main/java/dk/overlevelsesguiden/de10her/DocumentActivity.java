@@ -209,6 +209,62 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.delete){
+            SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
+            Gson gson = new Gson();
+            String loadJson = preferences.getString("document_array", null);
+            Type type = new TypeToken<ArrayList<Document>>() {}.getType();
+            documents = gson.fromJson(loadJson, type);
+
+            documents.remove(documentIndex);
+
+            SharedPreferences.Editor editor = preferences.edit();
+            String saveJson = gson.toJson(documents);
+            editor.putString("document_array", saveJson);
+            editor.apply();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (item.getItemId() == R.id.edit){
+            Intent editIntent = new Intent(this, EditOrDuplicateDocumentActivity.class);
+            editIntent.putExtra("document_index", documentIndex);
+            editIntent.putExtra("is_duplicating", false);
+            editIntent.putExtra("title_to_edit", title.getText().toString());
+            editIntent.putExtra("h1_to_edit", h1.getText().toString());
+            editIntent.putExtra("h2_to_edit", h2.getText().toString());
+            editIntent.putExtra("h3_to_edit", h3.getText().toString());
+            editIntent.putExtra("h4_to_edit", h4.getText().toString());
+            editIntent.putExtra("h5_to_edit", h5.getText().toString());
+            editIntent.putExtra("h6_to_edit", h6.getText().toString());
+            editIntent.putExtra("h7_to_edit", h7.getText().toString());
+            editIntent.putExtra("h8_to_edit", h8.getText().toString());
+            editIntent.putExtra("h9_to_edit", h9.getText().toString());
+            editIntent.putExtra("h10_to_edit", h10.getText().toString());
+            startActivity(editIntent);
+            return true;
+        }
+        if (item.getItemId() == R.id.duplicate){
+            Intent duplicateIntent = new Intent(this, EditOrDuplicateDocumentActivity.class);
+            duplicateIntent.putExtra("document_index", documentIndex);
+            duplicateIntent.putExtra("is_duplicating", true);
+            duplicateIntent.putExtra("title_to_edit", title.getText().toString()+" "+getString(R.string.copy));
+            duplicateIntent.putExtra("h1_to_edit", h1.getText().toString());
+            duplicateIntent.putExtra("h2_to_edit", h2.getText().toString());
+            duplicateIntent.putExtra("h3_to_edit", h3.getText().toString());
+            duplicateIntent.putExtra("h4_to_edit", h4.getText().toString());
+            duplicateIntent.putExtra("h5_to_edit", h5.getText().toString());
+            duplicateIntent.putExtra("h6_to_edit", h6.getText().toString());
+            duplicateIntent.putExtra("h7_to_edit", h7.getText().toString());
+            duplicateIntent.putExtra("h8_to_edit", h8.getText().toString());
+            duplicateIntent.putExtra("h9_to_edit", h9.getText().toString());
+            duplicateIntent.putExtra("h10_to_edit", h10.getText().toString());
+            startActivity(duplicateIntent);
+        }else {
+            return false;
+        }
+        /*
         switch (item.getItemId()){
             case R.id.delete:
                 SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
@@ -263,5 +319,9 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
             default:
                 return false;
         }
+         */
+        return false;
     }
+
+
 }
