@@ -1,11 +1,18 @@
 package dk.overlevelsesguiden.de10her;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -14,7 +21,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -71,6 +87,11 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document);
+
+        if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+            //requestExternalStoragePermission();
+            ActivityCompat.requestPermissions(DocumentActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
 
         documentIndex = getIntent().getIntExtra("documentIndex", 0);
 
@@ -207,8 +228,43 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         menu.show();
     }
 
+    public void downloadPdfAllHs() throws IOException {
+        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        String fileName = title.getText().toString()+" "+getString(R.string.PdfFillerAllHs)+".pdf";
+        Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
+        File file = new File(pdfPath, fileName);
+
+        PdfWriter writer = new PdfWriter(file);
+        PdfDocument pdf = new PdfDocument(writer);
+
+        com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document(pdf, PageSize.A4, false);
+        doc.setMargins(32, 32, 80, 32);
+
+        Paragraph title = new Paragraph("De 10 H'er");
+        title.setTextAlignment(TextAlignment.CENTER);
+        title.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        title.setFontSize(24);
+
+        doc.add(title);
+
+        doc.close();
+        Toast.makeText(this, getString(R.string.downloadNotice), Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.downloadAllHs){
+            if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                Toast.makeText(this, "denied", Toast.LENGTH_SHORT).show();
+            }else {
+                try {
+                    downloadPdfAllHs();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         if (item.getItemId() == R.id.delete){
             SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
             Gson gson = new Gson();
