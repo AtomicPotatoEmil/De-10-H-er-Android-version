@@ -10,6 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.De10Her">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="dk.overlevelsesguiden.de10her.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
         <activity android:name=".EditOrDuplicateDocumentActivity"></activity>
         <activity android:name=".DocumentActivity" />
         <activity

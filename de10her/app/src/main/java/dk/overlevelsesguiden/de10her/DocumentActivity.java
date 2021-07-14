@@ -4,15 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -22,11 +25,15 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.borders.SolidBorder;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 
 import java.io.File;
@@ -87,6 +94,7 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document);
+
 
         if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
             //requestExternalStoragePermission();
@@ -229,9 +237,10 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
     }
 
     public void downloadPdfAllHs() throws IOException {
+        String subtitleString = title.getText().toString();
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        String fileName = title.getText().toString()+" "+getString(R.string.PdfFillerAllHs)+".pdf";
-        Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
+        String fileName = subtitleString+" "+getString(R.string.PdfFillerAllHs)+".pdf";
+        //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
         File file = new File(pdfPath, fileName);
 
         PdfWriter writer = new PdfWriter(file);
@@ -240,15 +249,124 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document(pdf, PageSize.A4, false);
         doc.setMargins(32, 32, 80, 32);
 
-        Paragraph title = new Paragraph("De 10 H'er");
+        Paragraph title = new Paragraph(getString(R.string.app_name));
         title.setTextAlignment(TextAlignment.CENTER);
         title.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
         title.setFontSize(24);
-
         doc.add(title);
 
+
+        Paragraph subtitle = new Paragraph(subtitleString);
+        subtitle.setTextAlignment(TextAlignment.CENTER);
+        subtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        subtitle.setFontSize(18);
+        doc.add(subtitle);
+
+        float [] tableColumnWidths = {150F, 595};
+        Table table = new Table(tableColumnWidths);
+        table.setMarginTop(10);
+
+        Paragraph H1QuestionTitle = new Paragraph(h1Title.getText().toString());
+        H1QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H1QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H1QuestionTitle.setFontSize(14);
+
+        Paragraph H1QuestionSubtitle = new Paragraph(getString(R.string.content));
+        H1QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H1QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H1QuestionSubtitle.setFontSize(14);
+
+        Cell cell = new Cell();
+        cell.add(H1QuestionTitle);
+        cell.add(H1QuestionSubtitle);
+        cell.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell);
+
+        Cell cell2 = new Cell();
+        if (h1.getText().toString().length() != 0){
+            Paragraph H1Answer = new Paragraph(h1.getText().toString());
+            H1Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H1Answer.setFontSize(14);
+            H1Answer.setMarginRight(5);
+            H1Answer.setMarginLeft(5);
+            cell2.add(H1Answer);
+        }
+        cell2.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell2);
+
+        Paragraph H2QuestionTitle = new Paragraph(h2Title.getText().toString());
+        H2QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H2QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H2QuestionTitle.setFontSize(14);
+
+        Paragraph H2QuestionSubtitle = new Paragraph(getString(R.string.meaning));
+        H2QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H2QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H2QuestionSubtitle.setFontSize(14);
+
+        Cell cell3 = new Cell();
+        cell3.add(H2QuestionTitle);
+        cell3.add(H2QuestionSubtitle);
+        cell3.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell3);
+
+        Cell cell4 = new Cell();
+        if (h2.getText().toString().length() != 0){
+            Paragraph H2Answer = new Paragraph(h2.getText().toString());
+            H2Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H2Answer.setFontSize(14);
+            H2Answer.setMarginRight(5);
+            H2Answer.setMarginLeft(5);
+            cell4.add(H2Answer);
+        }
+        cell4.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell4);
+
+        Paragraph H3QuestionTitle = new Paragraph(h3Title.getText().toString());
+        H3QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H3QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H3QuestionTitle.setFontSize(14);
+
+        Paragraph H3QuestionSubtitle = new Paragraph(getString(R.string.method));
+        H3QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H3QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H3QuestionSubtitle.setFontSize(14);
+
+        Cell cell5 = new Cell();
+        cell5.add(H3QuestionTitle);
+        cell5.add(H3QuestionSubtitle);
+        cell5.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell5);
+
+        Cell cell6 = new Cell();
+        if (h3.getText().toString().length() != 0){
+            Paragraph H3Answer = new Paragraph(h3.getText().toString());
+            H3Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H3Answer.setFontSize(14);
+            H3Answer.setMarginRight(5);
+            H3Answer.setMarginLeft(5);
+            cell6.add(H3Answer);
+        }
+        cell6.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell6);
+
+        doc.add(table);
         doc.close();
         Toast.makeText(this, getString(R.string.downloadNotice), Toast.LENGTH_SHORT).show();
+
+        Uri contentUri = FileProvider.getUriForFile(this, "dk.overlevelsesguiden.de10her.fileprovider", file);
+
+        Intent sharePdfIntent = new Intent(Intent.ACTION_SEND);
+        sharePdfIntent.setType("application/pdf");
+        sharePdfIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        sharePdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(sharePdfIntent, "share"));
 
     }
 

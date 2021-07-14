@@ -91,5 +91,5 @@
     <string name="cancel">Afbryd</string>
     <string name="PdfFillerAllHs">alle h\'er</string>
     <string name="PdfFilleOnlyFilled">kunudfyldte</string>
-    <string name="downloadNotice">PDF eksporteret til enhedens download folder</string>
+    <string name="downloadNotice">Downloader og sender PDF</string>
 </resources>
