@@ -1,13 +1,12 @@
 package dk.overlevelsesguiden.de10her;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.print.PrintHelper;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,7 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -35,6 +33,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.VerticalAlignment;
 
 import java.io.File;
 import java.io.IOException;
@@ -236,10 +235,10 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         menu.show();
     }
 
-    public void downloadPdfAllHs() throws IOException {
+    private void sharePdfAllHs() throws IOException {
         String subtitleString = title.getText().toString();
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        String fileName = subtitleString+" "+getString(R.string.PdfFillerAllHs)+".pdf";
+        String fileName = subtitleString+".pdf";
         //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
         File file = new File(pdfPath, fileName);
 
@@ -247,7 +246,7 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         PdfDocument pdf = new PdfDocument(writer);
 
         com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document(pdf, PageSize.A4, false);
-        doc.setMargins(32, 32, 80, 32);
+        doc.setMargins(32, 32, 40, 32);
 
         Paragraph title = new Paragraph(getString(R.string.app_name));
         title.setTextAlignment(TextAlignment.CENTER);
@@ -264,7 +263,7 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
 
         float [] tableColumnWidths = {150F, 595};
         Table table = new Table(tableColumnWidths);
-        table.setMarginTop(10);
+        table.setMarginTop(2);
 
         Paragraph H1QuestionTitle = new Paragraph(h1Title.getText().toString());
         H1QuestionTitle.setTextAlignment(TextAlignment.CENTER);
@@ -356,7 +355,228 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
 
         table.addCell(cell6);
 
+        Paragraph H4QuestionTitle = new Paragraph(h4Title.getText().toString());
+        H4QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H4QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H4QuestionTitle.setFontSize(14);
+
+        Paragraph H4QuestionSubtitle = new Paragraph(getString(R.string.place));
+        H4QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H4QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H4QuestionSubtitle.setFontSize(14);
+
+        Cell cell7 = new Cell();
+        cell7.add(H4QuestionTitle);
+        cell7.add(H4QuestionSubtitle);
+        cell7.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell7);
+
+        Cell cell8 = new Cell();
+        if (h4.getText().toString().length() != 0){
+            Paragraph H4Answer = new Paragraph(h4.getText().toString());
+            H4Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H4Answer.setFontSize(14);
+            H4Answer.setMarginRight(5);
+            H4Answer.setMarginLeft(5);
+            cell8.add(H4Answer);
+        }
+        cell8.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell8);
+
+        Paragraph H5QuestionTitle = new Paragraph(h5Title.getText().toString());
+        H5QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H5QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H5QuestionTitle.setFontSize(14);
+
+        Paragraph H5QuestionSubtitle = new Paragraph(getString(R.string.time));
+        H5QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H5QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H5QuestionSubtitle.setFontSize(14);
+
+        Cell cell9 = new Cell();
+        cell9.add(H5QuestionTitle);
+        cell9.add(H5QuestionSubtitle);
+        cell9.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell9);
+
+        Cell cell10 = new Cell();
+        if (h5.getText().toString().length() != 0){
+            Paragraph H5Answer = new Paragraph(h5.getText().toString());
+            H5Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H5Answer.setFontSize(14);
+            H5Answer.setMarginRight(5);
+            H5Answer.setMarginLeft(5);
+            cell10.add(H5Answer);
+        }
+        cell10.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell10);
+
+        Paragraph H6QuestionTitle = new Paragraph(h6Title.getText().toString());
+        H6QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H6QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H6QuestionTitle.setFontSize(14);
+
+        Paragraph H6QuestionSubtitle = new Paragraph(getString(R.string.time_horizont));
+        H6QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H6QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H6QuestionSubtitle.setFontSize(14);
+
+        Cell cell11 = new Cell();
+        cell11.add(H6QuestionTitle);
+        cell11.add(H6QuestionSubtitle);
+        cell11.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell11);
+
+        Cell cell12 = new Cell();
+        if (h6.getText().toString().length() != 0){
+            Paragraph H6Answer = new Paragraph(h6.getText().toString());
+            H6Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H6Answer.setFontSize(14);
+            H6Answer.setMarginRight(5);
+            H6Answer.setMarginLeft(5);
+            cell12.add(H6Answer);
+        }
+        cell12.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell12);
+
+        Paragraph H7QuestionTitle = new Paragraph(h7Title.getText().toString());
+        H7QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H7QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H7QuestionTitle.setFontSize(14);
+
+        Paragraph H7QuestionSubtitle = new Paragraph(getString(R.string.people));
+        H7QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H7QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H7QuestionSubtitle.setFontSize(14);
+
+        Cell cell13 = new Cell();
+        cell13.add(H7QuestionTitle);
+        cell13.add(H7QuestionSubtitle);
+        cell13.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell13);
+
+        Cell cell14 = new Cell();
+        if (h7.getText().toString().length() != 0){
+            Paragraph H7Answer = new Paragraph(h7.getText().toString());
+            H7Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H7Answer.setFontSize(14);
+            H7Answer.setMarginRight(5);
+            H7Answer.setMarginLeft(5);
+            cell14.add(H7Answer);
+        }
+        cell14.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell14);
+
+        Paragraph H8QuestionTitle = new Paragraph(h8Title.getText().toString());
+        H8QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H8QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H8QuestionTitle.setFontSize(14);
+
+        Paragraph H8QuestionSubtitle = new Paragraph(getString(R.string.amount));
+        H8QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H8QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H8QuestionSubtitle.setFontSize(14);
+
+        Cell cell15 = new Cell();
+        cell15.add(H8QuestionTitle);
+        cell15.add(H8QuestionSubtitle);
+        cell15.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell15);
+
+        Cell cell16 = new Cell();
+        if (h8.getText().toString().length() != 0){
+            Paragraph H8Answer = new Paragraph(h8.getText().toString());
+            H8Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H8Answer.setFontSize(14);
+            H8Answer.setMarginRight(5);
+            H8Answer.setMarginLeft(5);
+            cell16.add(H8Answer);
+        }
+        cell16.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell16);
+
+        Paragraph H9QuestionTitle = new Paragraph(h9Title.getText().toString());
+        H9QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H9QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H9QuestionTitle.setFontSize(14);
+
+        Paragraph H9QuestionSubtitle = new Paragraph(getString(R.string.person));
+        H9QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H9QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H9QuestionSubtitle.setFontSize(14);
+
+        Cell cell17 = new Cell();
+        cell17.add(H9QuestionTitle);
+        cell17.add(H9QuestionSubtitle);
+        cell17.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell17);
+
+        Cell cell18 = new Cell();
+        if (h9.getText().toString().length() != 0){
+            Paragraph H9Answer = new Paragraph(h9.getText().toString());
+            H9Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H9Answer.setFontSize(14);
+            H9Answer.setMarginRight(5);
+            H9Answer.setMarginLeft(5);
+            cell18.add(H9Answer);
+        }
+        cell18.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell18);
+
+        Paragraph H10QuestionTitle = new Paragraph(h10Title.getText().toString());
+        H10QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+        H10QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+        H10QuestionTitle.setFontSize(14);
+
+        Paragraph H10QuestionSubtitle = new Paragraph(getString(R.string.content));
+        H10QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+        H10QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        H10QuestionSubtitle.setFontSize(14);
+
+        Cell cell19 = new Cell();
+        cell19.add(H10QuestionTitle);
+        cell19.add(H10QuestionSubtitle);
+        cell19.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell19);
+
+        Cell cell20 = new Cell();
+        if (h10.getText().toString().length() != 0){
+            Paragraph H10Answer = new Paragraph(h10.getText().toString());
+            H10Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H10Answer.setFontSize(14);
+            H10Answer.setMarginRight(5);
+            H10Answer.setMarginLeft(5);
+            cell20.add(H10Answer);
+        }
+        cell20.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+        table.addCell(cell20);
+
         doc.add(table);
+
+        int numberOfPages = doc.getPdfDocument().getNumberOfPages();
+        for (int i = 1; i <= numberOfPages; i++){
+            if(i > 1) {
+                doc.showTextAligned(new Paragraph("Side "+i).setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA)).setFontSize(14),
+                        74, 32, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+            }
+            doc.showTextAligned(new Paragraph("overlevelsesguiden.dk").setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA)).setFontSize(14),
+                    595 - 32, 32, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+        }
+
         doc.close();
         Toast.makeText(this, getString(R.string.downloadNotice), Toast.LENGTH_SHORT).show();
 
@@ -370,14 +590,420 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
 
     }
 
+    private void sharePdfOnlyFilled() throws IOException{
+        String subtitleString = title.getText().toString();
+        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        String fileName = subtitleString+".pdf";
+        //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
+        File file = new File(pdfPath, fileName);
+
+        PdfWriter writer = new PdfWriter(file);
+        PdfDocument pdf = new PdfDocument(writer);
+
+        com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document(pdf, PageSize.A4, false);
+        doc.setMargins(32, 32, 40, 32);
+
+        Paragraph title = new Paragraph(getString(R.string.app_name));
+        title.setTextAlignment(TextAlignment.CENTER);
+        title.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        title.setFontSize(24);
+        doc.add(title);
+
+
+        Paragraph subtitle = new Paragraph(subtitleString);
+        subtitle.setTextAlignment(TextAlignment.CENTER);
+        subtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+        subtitle.setFontSize(18);
+        doc.add(subtitle);
+
+        float [] tableColumnWidths = {150F, 595};
+        Table table = new Table(tableColumnWidths);
+        table.setMarginTop(2);
+
+        if (h1.getText().toString().length() != 0) {
+
+            Paragraph H1QuestionTitle = new Paragraph(h1Title.getText().toString());
+            H1QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H1QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H1QuestionTitle.setFontSize(14);
+
+            Paragraph H1QuestionSubtitle = new Paragraph(getString(R.string.content));
+            H1QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H1QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H1QuestionSubtitle.setFontSize(14);
+
+            Cell cell = new Cell();
+            cell.add(H1QuestionTitle);
+            cell.add(H1QuestionSubtitle);
+            cell.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell);
+
+            Cell cell2 = new Cell();
+
+            Paragraph H1Answer = new Paragraph(h1.getText().toString());
+            H1Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H1Answer.setFontSize(14);
+            H1Answer.setMarginRight(5);
+            H1Answer.setMarginLeft(5);
+            cell2.add(H1Answer);
+
+            cell2.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell2);
+        }
+
+        if (h2.getText().toString().length() != 0) {
+
+            Paragraph H2QuestionTitle = new Paragraph(h2Title.getText().toString());
+            H2QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H2QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H2QuestionTitle.setFontSize(14);
+
+            Paragraph H2QuestionSubtitle = new Paragraph(getString(R.string.meaning));
+            H2QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H2QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H2QuestionSubtitle.setFontSize(14);
+
+            Cell cell3 = new Cell();
+            cell3.add(H2QuestionTitle);
+            cell3.add(H2QuestionSubtitle);
+            cell3.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell3);
+
+            Cell cell4 = new Cell();
+
+            Paragraph H2Answer = new Paragraph(h2.getText().toString());
+            H2Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H2Answer.setFontSize(14);
+            H2Answer.setMarginRight(5);
+            H2Answer.setMarginLeft(5);
+            cell4.add(H2Answer);
+
+            cell4.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell4);
+
+        }
+
+        if (h3.getText().toString().length() != 0) {
+
+            Paragraph H3QuestionTitle = new Paragraph(h3Title.getText().toString());
+            H3QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H3QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H3QuestionTitle.setFontSize(14);
+
+            Paragraph H3QuestionSubtitle = new Paragraph(getString(R.string.method));
+            H3QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H3QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H3QuestionSubtitle.setFontSize(14);
+
+            Cell cell5 = new Cell();
+            cell5.add(H3QuestionTitle);
+            cell5.add(H3QuestionSubtitle);
+            cell5.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell5);
+
+            Cell cell6 = new Cell();
+
+            Paragraph H3Answer = new Paragraph(h3.getText().toString());
+            H3Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H3Answer.setFontSize(14);
+            H3Answer.setMarginRight(5);
+            H3Answer.setMarginLeft(5);
+            cell6.add(H3Answer);
+
+            cell6.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell6);
+
+        }
+
+        if (h4.getText().toString().length() != 0) {
+
+            Paragraph H4QuestionTitle = new Paragraph(h4Title.getText().toString());
+            H4QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H4QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H4QuestionTitle.setFontSize(14);
+
+            Paragraph H4QuestionSubtitle = new Paragraph(getString(R.string.place));
+            H4QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H4QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H4QuestionSubtitle.setFontSize(14);
+
+            Cell cell7 = new Cell();
+            cell7.add(H4QuestionTitle);
+            cell7.add(H4QuestionSubtitle);
+            cell7.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell7);
+
+            Cell cell8 = new Cell();
+
+            Paragraph H4Answer = new Paragraph(h4.getText().toString());
+            H4Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H4Answer.setFontSize(14);
+            H4Answer.setMarginRight(5);
+            H4Answer.setMarginLeft(5);
+            cell8.add(H4Answer);
+
+            cell8.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell8);
+
+        }
+
+        if (h5.getText().toString().length() != 0) {
+
+            Paragraph H5QuestionTitle = new Paragraph(h5Title.getText().toString());
+            H5QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H5QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H5QuestionTitle.setFontSize(14);
+
+            Paragraph H5QuestionSubtitle = new Paragraph(getString(R.string.time));
+            H5QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H5QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H5QuestionSubtitle.setFontSize(14);
+
+            Cell cell9 = new Cell();
+            cell9.add(H5QuestionTitle);
+            cell9.add(H5QuestionSubtitle);
+            cell9.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell9);
+
+            Cell cell10 = new Cell();
+
+            Paragraph H5Answer = new Paragraph(h5.getText().toString());
+            H5Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H5Answer.setFontSize(14);
+            H5Answer.setMarginRight(5);
+            H5Answer.setMarginLeft(5);
+            cell10.add(H5Answer);
+
+            cell10.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell10);
+
+        }
+
+        if (h6.getText().toString().length() != 0) {
+
+            Paragraph H6QuestionTitle = new Paragraph(h6Title.getText().toString());
+            H6QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H6QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H6QuestionTitle.setFontSize(14);
+
+            Paragraph H6QuestionSubtitle = new Paragraph(getString(R.string.time_horizont));
+            H6QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H6QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H6QuestionSubtitle.setFontSize(14);
+
+            Cell cell11 = new Cell();
+            cell11.add(H6QuestionTitle);
+            cell11.add(H6QuestionSubtitle);
+            cell11.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell11);
+
+            Cell cell12 = new Cell();
+
+            Paragraph H6Answer = new Paragraph(h6.getText().toString());
+            H6Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H6Answer.setFontSize(14);
+            H6Answer.setMarginRight(5);
+            H6Answer.setMarginLeft(5);
+            cell12.add(H6Answer);
+
+            cell12.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell12);
+
+        }
+
+        if (h7.getText().toString().length() != 0) {
+
+            Paragraph H7QuestionTitle = new Paragraph(h7Title.getText().toString());
+            H7QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H7QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H7QuestionTitle.setFontSize(14);
+
+            Paragraph H7QuestionSubtitle = new Paragraph(getString(R.string.people));
+            H7QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H7QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H7QuestionSubtitle.setFontSize(14);
+
+            Cell cell13 = new Cell();
+            cell13.add(H7QuestionTitle);
+            cell13.add(H7QuestionSubtitle);
+            cell13.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell13);
+
+            Cell cell14 = new Cell();
+
+            Paragraph H7Answer = new Paragraph(h7.getText().toString());
+            H7Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H7Answer.setFontSize(14);
+            H7Answer.setMarginRight(5);
+            H7Answer.setMarginLeft(5);
+            cell14.add(H7Answer);
+
+            cell14.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell14);
+
+        }
+
+        if (h8.getText().toString().length() != 0) {
+
+            Paragraph H8QuestionTitle = new Paragraph(h8Title.getText().toString());
+            H8QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H8QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H8QuestionTitle.setFontSize(14);
+
+            Paragraph H8QuestionSubtitle = new Paragraph(getString(R.string.amount));
+            H8QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H8QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H8QuestionSubtitle.setFontSize(14);
+
+            Cell cell15 = new Cell();
+            cell15.add(H8QuestionTitle);
+            cell15.add(H8QuestionSubtitle);
+            cell15.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell15);
+
+            Cell cell16 = new Cell();
+
+            Paragraph H8Answer = new Paragraph(h8.getText().toString());
+            H8Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H8Answer.setFontSize(14);
+            H8Answer.setMarginRight(5);
+            H8Answer.setMarginLeft(5);
+            cell16.add(H8Answer);
+
+            cell16.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell16);
+
+        }
+
+        if (h9.getText().toString().length() != 0) {
+
+            Paragraph H9QuestionTitle = new Paragraph(h9Title.getText().toString());
+            H9QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H9QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H9QuestionTitle.setFontSize(14);
+
+            Paragraph H9QuestionSubtitle = new Paragraph(getString(R.string.person));
+            H9QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H9QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H9QuestionSubtitle.setFontSize(14);
+
+            Cell cell17 = new Cell();
+            cell17.add(H9QuestionTitle);
+            cell17.add(H9QuestionSubtitle);
+            cell17.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell17);
+
+            Cell cell18 = new Cell();
+
+            Paragraph H9Answer = new Paragraph(h9.getText().toString());
+            H9Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H9Answer.setFontSize(14);
+            H9Answer.setMarginRight(5);
+            H9Answer.setMarginLeft(5);
+            cell18.add(H9Answer);
+
+            cell18.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell18);
+
+        }
+
+        if (h10.getText().toString().length() != 0) {
+
+            Paragraph H10QuestionTitle = new Paragraph(h10Title.getText().toString());
+            H10QuestionTitle.setTextAlignment(TextAlignment.CENTER);
+            H10QuestionTitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
+            H10QuestionTitle.setFontSize(14);
+
+            Paragraph H10QuestionSubtitle = new Paragraph(getString(R.string.content));
+            H10QuestionSubtitle.setTextAlignment(TextAlignment.CENTER);
+            H10QuestionSubtitle.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H10QuestionSubtitle.setFontSize(14);
+
+            Cell cell19 = new Cell();
+            cell19.add(H10QuestionTitle);
+            cell19.add(H10QuestionSubtitle);
+            cell19.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell19);
+
+            Cell cell20 = new Cell();
+
+            Paragraph H10Answer = new Paragraph(h10.getText().toString());
+            H10Answer.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
+            H10Answer.setFontSize(14);
+            H10Answer.setMarginRight(5);
+            H10Answer.setMarginLeft(5);
+            cell20.add(H10Answer);
+
+            cell20.setBorder(new SolidBorder(ColorConstants.BLACK, 2));
+
+            table.addCell(cell20);
+
+        }
+
+        doc.add(table);
+
+        int numberOfPages = doc.getPdfDocument().getNumberOfPages();
+        for (int i = 1; i <= numberOfPages; i++){
+            if(i > 1) {
+                doc.showTextAligned(new Paragraph("Side "+i).setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA)).setFontSize(14),
+                        74, 32, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+            }
+            doc.showTextAligned(new Paragraph("overlevelsesguiden.dk").setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA)).setFontSize(14),
+                    595 - 32, 32, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+        }
+
+        doc.close();
+        Toast.makeText(this, getString(R.string.downloadNotice), Toast.LENGTH_SHORT).show();
+
+        Uri contentUri = FileProvider.getUriForFile(this, "dk.overlevelsesguiden.de10her.fileprovider", file);
+
+        Intent sharePdfIntent = new Intent(Intent.ACTION_SEND);
+        sharePdfIntent.setType("application/pdf");
+        sharePdfIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        sharePdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(sharePdfIntent, "share"));
+
+    }
+
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.downloadAllHs){
+        if (item.getItemId() == R.id.shareAllHs){
             if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, "denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.whyPermissionIsNeeded), Toast.LENGTH_SHORT).show();
             }else {
                 try {
-                    downloadPdfAllHs();
+                    sharePdfAllHs();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (item.getItemId() == R.id.shareOnlyFilled){
+            if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                Toast.makeText(this, getString(R.string.whyPermissionIsNeeded), Toast.LENGTH_SHORT).show();
+            }else {
+                try {
+                    sharePdfOnlyFilled();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
