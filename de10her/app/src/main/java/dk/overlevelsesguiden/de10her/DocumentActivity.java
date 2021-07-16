@@ -1,5 +1,6 @@
 package dk.overlevelsesguiden.de10her;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -7,6 +8,7 @@ import androidx.core.content.FileProvider;
 import androidx.print.PrintHelper;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -14,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -89,16 +92,12 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
     private TextView h10Description;
     private TextView h10;
 
+    private String fileToDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document);
-
-
-        if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-            //requestExternalStoragePermission();
-            ActivityCompat.requestPermissions(DocumentActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }
 
         documentIndex = getIntent().getIntExtra("documentIndex", 0);
 
@@ -237,10 +236,11 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
 
     private void sharePdfAllHs() throws IOException {
         String subtitleString = title.getText().toString();
-        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        //String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
         String fileName = subtitleString+".pdf";
+        fileToDelete = fileName;
         //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
-        File file = new File(pdfPath, fileName);
+        File file = new File(getApplicationContext().getExternalFilesDir(null), fileName);
 
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdf = new PdfDocument(writer);
@@ -578,7 +578,6 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         }
 
         doc.close();
-        Toast.makeText(this, getString(R.string.downloadNotice), Toast.LENGTH_SHORT).show();
 
         Uri contentUri = FileProvider.getUriForFile(this, "dk.overlevelsesguiden.de10her.fileprovider", file);
 
@@ -588,14 +587,16 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         sharePdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(sharePdfIntent, "share"));
 
+
     }
 
     private void sharePdfOnlyFilled() throws IOException{
         String subtitleString = title.getText().toString();
-        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        //String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
         String fileName = subtitleString+".pdf";
+        fileToDelete = fileName;
         //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
-        File file = new File(pdfPath, fileName);
+        File file = new File(getApplicationContext().getExternalFilesDir(null), fileName);
 
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdf = new PdfDocument(writer);
@@ -972,7 +973,6 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         }
 
         doc.close();
-        Toast.makeText(this, getString(R.string.downloadNotice), Toast.LENGTH_SHORT).show();
 
         Uri contentUri = FileProvider.getUriForFile(this, "dk.overlevelsesguiden.de10her.fileprovider", file);
 
@@ -982,49 +982,54 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         sharePdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(sharePdfIntent, "share"));
 
+
     }
 
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.shareAllHs){
-            if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, getString(R.string.whyPermissionIsNeeded), Toast.LENGTH_SHORT).show();
-            }else {
-                try {
-                    sharePdfAllHs();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                sharePdfAllHs();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         if (item.getItemId() == R.id.shareOnlyFilled){
-            if (ContextCompat.checkSelfPermission(DocumentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, getString(R.string.whyPermissionIsNeeded), Toast.LENGTH_SHORT).show();
-            }else {
-                try {
-                    sharePdfOnlyFilled();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                sharePdfOnlyFilled();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
         }
         if (item.getItemId() == R.id.delete){
-            SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
-            Gson gson = new Gson();
-            String loadJson = preferences.getString("document_array", null);
-            Type type = new TypeToken<ArrayList<Document>>() {}.getType();
-            documents = gson.fromJson(loadJson, type);
 
-            documents.remove(documentIndex);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            SharedPreferences.Editor editor = preferences.edit();
-            String saveJson = gson.toJson(documents);
-            editor.putString("document_array", saveJson);
-            editor.apply();
+            builder.setMessage(getString(R.string.deleteNotice)).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
+                    Gson gson = new Gson();
+                    String loadJson = preferences.getString("document_array", null);
+                    Type type = new TypeToken<ArrayList<Document>>() {}.getType();
+                    documents = gson.fromJson(loadJson, type);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+                    documents.remove(documentIndex);
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    String saveJson = gson.toJson(documents);
+                    editor.putString("document_array", saveJson);
+                    editor.apply();
+
+                    Intent intent = new Intent(DocumentActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }).setNegativeButton(getString(R.string.cancel), null);
+            AlertDialog alert = builder.create();
+            alert.show();
+
             return true;
         }
         if (item.getItemId() == R.id.edit){
@@ -1123,5 +1128,14 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         return false;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (fileToDelete != null) {
+            File temporaryFile = new File(getApplicationContext().getExternalFilesDir(null), fileToDelete);
+            if (temporaryFile.exists()) {
+                temporaryFile.delete();
+            }
+        }
+    }
 }

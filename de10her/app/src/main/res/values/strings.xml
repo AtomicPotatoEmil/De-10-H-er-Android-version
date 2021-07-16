@@ -87,10 +87,7 @@
     <string name="all10hs">Alle 10 h\'er</string>
     <string name="onlyFilled">Kun de udfyldte</string>
     <string name="permissionNeeded">Tilladelse nødvændig</string>
-    <string name="whyPermissionIsNeeded">Din enhed kan ikke download eller sende dokumenter uden tilladelse</string>
-    <string name="cancel">Afbryd</string>
-    <string name="PdfFillerAllHs">alle h\'er</string>
-    <string name="PdfFilleOnlyFilled">kunudfyldte</string>
-    <string name="downloadNotice">Downloader og sender PDF</string>
+    <string name="cancel">Anuller</string>
     <string name="page">Side</string>
+    <string name="deleteNotice">Er du sikker på at du vil slette dette skema?</string>
 </resources>
