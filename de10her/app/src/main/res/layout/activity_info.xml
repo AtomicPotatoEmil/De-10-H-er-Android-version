@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"/>
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary_color"
                 android:textSize="30sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
@@ -37,7 +37,7 @@
             <TextView
                 android:textColorLink="#F57C00"
                 android:autoLink="email"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary_color"
                 android:textSize="18sp"
                 android:text="@string/info"
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
 
     <LinearLayout
         android:elevation="18dp"
-        android:background="@color/white"
+        android:background="@color/secondary_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageButton

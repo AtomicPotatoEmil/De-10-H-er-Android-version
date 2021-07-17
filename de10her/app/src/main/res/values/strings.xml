@@ -90,4 +90,5 @@
     <string name="cancel">Anuller</string>
     <string name="page">Side</string>
     <string name="deleteNotice">Er du sikker på at du vil slette dette skema?</string>
+    <string name="fieldTitleIsNeeded">Mangler at udfylde titel</string>
 </resources>
