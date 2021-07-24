@@ -66,7 +66,7 @@
                         \n\nHerfra udfyldes teksten til de enkelte H\’er.
                         Hvis du vælger ikke at udfylde alle 10 H\’er, vil de uudfyldte være blanke i det færdige skema.
 
-                        \n\nNår skemaet er færdigudfyldt, kan det både printes og sendes (via mail, SMS eller andre forsendelsesapplikationer).
+                        \n\nNår skemaet er færdigudfyldt, kan det både printes og sendes (via mail eller andre forsendelsesapplikationer).
                         Skemaet omdannes til en pdf-fil, så det vil ikke være muligt for modtageren at ændre i teksten.
                         Alle oprettede skemaer gemmes automatisk i appen med titel og dato.
 
@@ -77,6 +77,7 @@
                         \n\nJeg håber, at I vil få fornøjelse af app\'en, og hvis I oplever problemer, har andre spørgsmål eller gode ideer,
                         så send endelig en mail til mig på: anne@overlevelsesguiden.dk
     </string>
+    <string name="open_source_notice">Android versionen af De 10 H\'er appen er open-source. Koden kan hentes på dette link: https://github.com/overlevelsesguiden/The10H-Android</string>
 
     <string name="delete">Slet</string>
     <string name="save">Gem</string>

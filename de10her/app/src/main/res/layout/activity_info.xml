@@ -43,6 +43,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <TextView
+                android:layout_marginTop="16dp"
+                android:textColorLink="#F57C00"
+                android:autoLink="web"
+                android:textColor="@color/text_primary_color"
+                android:textSize="18sp"
+                android:text="@string/open_source_notice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
         </LinearLayout>
 
     </ScrollView>
