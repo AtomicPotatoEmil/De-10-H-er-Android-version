@@ -23,11 +23,11 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:onClick="saveDocument"
+            android:enabled="false"
             android:id="@+id/ok_save_button"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:padding="16dp"
-            android:textColor="@color/primary_color"
+            android:textColor="@drawable/button_state_selector"
             android:textSize="16sp"
             android:text="@string/ok"
             android:background="?android:attr/selectableItemBackground"

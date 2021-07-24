@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -37,6 +40,8 @@ public class EditOrDuplicateDocumentActivity extends AppCompatActivity {
     private EditText h8ToEdit;
     private EditText h9ToEdit;
     private EditText h10ToEdit;
+
+    private Button saveEditedDocumentButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +126,103 @@ public class EditOrDuplicateDocumentActivity extends AppCompatActivity {
         }else{
             h10ToEdit.setText(getIntent().getStringExtra("h10_to_edit"));
         }
+
+        titleToEdit.addTextChangedListener(buttonStateControl);
+
+        h1ToEdit.addTextChangedListener(buttonStateControl);
+        h2ToEdit.addTextChangedListener(buttonStateControl);
+        h3ToEdit.addTextChangedListener(buttonStateControl);
+        h4ToEdit.addTextChangedListener(buttonStateControl);
+        h5ToEdit.addTextChangedListener(buttonStateControl);
+        h6ToEdit.addTextChangedListener(buttonStateControl);
+        h7ToEdit.addTextChangedListener(buttonStateControl);
+        h8ToEdit.addTextChangedListener(buttonStateControl);
+        h9ToEdit.addTextChangedListener(buttonStateControl);
+        h10ToEdit.addTextChangedListener(buttonStateControl);
+
+        saveEditedDocumentButton = (Button) findViewById(R.id.saveEditedDocument);
+        saveEditedDocumentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isDuplicating){
+                    editedDocument.setTitle(titleToEdit.getText().toString());
+                    editedDocument.setH1(h1ToEdit.getText().toString());
+                    editedDocument.setH2(h2ToEdit.getText().toString());
+                    editedDocument.setH3(h3ToEdit.getText().toString());
+                    editedDocument.setH4(h4ToEdit.getText().toString());
+                    editedDocument.setH5(h5ToEdit.getText().toString());
+                    editedDocument.setH6(h6ToEdit.getText().toString());
+                    editedDocument.setH7(h7ToEdit.getText().toString());
+                    editedDocument.setH8(h8ToEdit.getText().toString());
+                    editedDocument.setH9(h9ToEdit.getText().toString());
+                    editedDocument.setH10(h10ToEdit.getText().toString());
+
+                    Calendar date = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
+                    String dateString = dateFormat.format(date.getTime());
+                    editedDocument.setDate(dateString);
+
+                    Calendar time = Calendar.getInstance();
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+                    String timeString = timeFormat.format(time.getTime());
+                    editedDocument.setTime(timeString);
+
+                    SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
+                    Gson gson = new Gson();
+                    String loadJson = preferences.getString("document_array", null);
+                    Type type = new TypeToken<ArrayList<Document>>() {}.getType();
+                    documents = gson.fromJson(loadJson, type);
+
+                    documents.add(editedDocument);
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    String saveJson = gson.toJson(documents);
+                    editor.putString("document_array", saveJson);
+                    editor.apply();
+
+                    Intent editDocumentIntent = new Intent(EditOrDuplicateDocumentActivity.this, MainActivity.class);
+                    startActivity(editDocumentIntent);
+                }else {
+                    editedDocument.setTitle(titleToEdit.getText().toString());
+                    editedDocument.setH1(h1ToEdit.getText().toString());
+                    editedDocument.setH2(h2ToEdit.getText().toString());
+                    editedDocument.setH3(h3ToEdit.getText().toString());
+                    editedDocument.setH4(h4ToEdit.getText().toString());
+                    editedDocument.setH5(h5ToEdit.getText().toString());
+                    editedDocument.setH6(h6ToEdit.getText().toString());
+                    editedDocument.setH7(h7ToEdit.getText().toString());
+                    editedDocument.setH8(h8ToEdit.getText().toString());
+                    editedDocument.setH9(h9ToEdit.getText().toString());
+                    editedDocument.setH10(h10ToEdit.getText().toString());
+
+                    Calendar date = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
+                    String dateString = dateFormat.format(date.getTime());
+                    editedDocument.setDate(dateString);
+
+                    Calendar time = Calendar.getInstance();
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+                    String timeString = timeFormat.format(time.getTime());
+                    editedDocument.setTime(timeString);
+
+                    SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
+                    Gson gson = new Gson();
+                    String loadJson = preferences.getString("document_array", null);
+                    Type type = new TypeToken<ArrayList<Document>>() {}.getType();
+                    documents = gson.fromJson(loadJson, type);
+
+                    documents.set(documentIndex, editedDocument);
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    String saveJson = gson.toJson(documents);
+                    editor.putString("document_array", saveJson);
+                    editor.apply();
+
+                    Intent editDocumentIntent = new Intent(EditOrDuplicateDocumentActivity.this, MainActivity.class);
+                    startActivity(editDocumentIntent);
+                }
+            }
+        });
     }
 
     public void goToMainActivity(View view){
@@ -128,83 +230,26 @@ public class EditOrDuplicateDocumentActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void saveEditedDocument(View view){
-        if(isDuplicating){
-            editedDocument.setTitle(titleToEdit.getText().toString());
-            editedDocument.setH1(h1ToEdit.getText().toString());
-            editedDocument.setH2(h2ToEdit.getText().toString());
-            editedDocument.setH3(h3ToEdit.getText().toString());
-            editedDocument.setH4(h4ToEdit.getText().toString());
-            editedDocument.setH5(h5ToEdit.getText().toString());
-            editedDocument.setH6(h6ToEdit.getText().toString());
-            editedDocument.setH7(h7ToEdit.getText().toString());
-            editedDocument.setH8(h8ToEdit.getText().toString());
-            editedDocument.setH9(h9ToEdit.getText().toString());
-            editedDocument.setH10(h10ToEdit.getText().toString());
+    private TextWatcher buttonStateControl = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            Calendar date = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
-            String dateString = dateFormat.format(date.getTime());
-            editedDocument.setDate(dateString);
-
-            Calendar time = Calendar.getInstance();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-            String timeString = timeFormat.format(time.getTime());
-            editedDocument.setTime(timeString);
-
-            SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
-            Gson gson = new Gson();
-            String loadJson = preferences.getString("document_array", null);
-            Type type = new TypeToken<ArrayList<Document>>() {}.getType();
-            documents = gson.fromJson(loadJson, type);
-
-            documents.add(editedDocument);
-
-            SharedPreferences.Editor editor = preferences.edit();
-            String saveJson = gson.toJson(documents);
-            editor.putString("document_array", saveJson);
-            editor.apply();
-
-            Intent editDocumentIntent = new Intent(this, MainActivity.class);
-            startActivity(editDocumentIntent);
-        }else {
-            editedDocument.setTitle(titleToEdit.getText().toString());
-            editedDocument.setH1(h1ToEdit.getText().toString());
-            editedDocument.setH2(h2ToEdit.getText().toString());
-            editedDocument.setH3(h3ToEdit.getText().toString());
-            editedDocument.setH4(h4ToEdit.getText().toString());
-            editedDocument.setH5(h5ToEdit.getText().toString());
-            editedDocument.setH6(h6ToEdit.getText().toString());
-            editedDocument.setH7(h7ToEdit.getText().toString());
-            editedDocument.setH8(h8ToEdit.getText().toString());
-            editedDocument.setH9(h9ToEdit.getText().toString());
-            editedDocument.setH10(h10ToEdit.getText().toString());
-
-            Calendar date = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
-            String dateString = dateFormat.format(date.getTime());
-            editedDocument.setDate(dateString);
-
-            Calendar time = Calendar.getInstance();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-            String timeString = timeFormat.format(time.getTime());
-            editedDocument.setTime(timeString);
-
-            SharedPreferences preferences = getSharedPreferences("preference", MODE_PRIVATE);
-            Gson gson = new Gson();
-            String loadJson = preferences.getString("document_array", null);
-            Type type = new TypeToken<ArrayList<Document>>() {}.getType();
-            documents = gson.fromJson(loadJson, type);
-
-            documents.set(documentIndex, editedDocument);
-
-            SharedPreferences.Editor editor = preferences.edit();
-            String saveJson = gson.toJson(documents);
-            editor.putString("document_array", saveJson);
-            editor.apply();
-
-            Intent editDocumentIntent = new Intent(this, MainActivity.class);
-            startActivity(editDocumentIntent);
         }
-    }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String titleInput = titleToEdit.getText().toString().trim();
+            saveEditedDocumentButton.setEnabled(!titleInput.isEmpty() && (!h1ToEdit.getText().toString().trim().isEmpty() ||
+                    !h2ToEdit.getText().toString().trim().isEmpty() || !h3ToEdit.getText().toString().trim().isEmpty() ||
+                    !h4ToEdit.getText().toString().trim().isEmpty() || !h5ToEdit.getText().toString().trim().isEmpty() ||
+                    !h6ToEdit.getText().toString().trim().isEmpty() || !h7ToEdit.getText().toString().trim().isEmpty() ||
+                    !h8ToEdit.getText().toString().trim().isEmpty() || !h9ToEdit.getText().toString().trim().isEmpty() ||
+                    !h10ToEdit.getText().toString().trim().isEmpty()));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }

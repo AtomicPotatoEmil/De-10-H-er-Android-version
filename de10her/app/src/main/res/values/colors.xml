@@ -9,4 +9,5 @@
     <color name="secondary_background">#FFFFFFFF</color>
     <color name="main_background">#ECEFF1</color>
     <color name="transparent_click_color">#11000000</color>
+    <color name="button_disabled">#B0BEC5</color>
 </resources>
