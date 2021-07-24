@@ -101,7 +101,6 @@ public class MakeDocumentActivity extends AppCompatActivity {
     }
 
     public void goToMainActivity(View view){
-        Toast.makeText(this, titleEdit.getText().toString().length(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

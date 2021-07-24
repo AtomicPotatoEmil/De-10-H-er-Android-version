@@ -240,7 +240,7 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         String fileName = subtitleString+".pdf";
         fileToDelete = fileName;
         //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
-        File file = new File(getApplicationContext().getExternalFilesDir(null), fileName);
+        File file = new File(getApplicationContext().getFilesDir(), fileName);
 
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdf = new PdfDocument(writer);
@@ -586,8 +586,6 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         sharePdfIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         sharePdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(sharePdfIntent, "share"));
-
-
     }
 
     private void sharePdfOnlyFilled() throws IOException{
@@ -596,7 +594,7 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         String fileName = subtitleString+".pdf";
         fileToDelete = fileName;
         //Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
-        File file = new File(getApplicationContext().getExternalFilesDir(null), fileName);
+        File file = new File(getApplicationContext().getFilesDir(), fileName);
 
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdf = new PdfDocument(writer);
@@ -1126,16 +1124,5 @@ public class DocumentActivity extends AppCompatActivity implements PopupMenu.OnM
         }
          */
         return false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (fileToDelete != null) {
-            File temporaryFile = new File(getApplicationContext().getExternalFilesDir(null), fileToDelete);
-            if (temporaryFile.exists()) {
-                temporaryFile.delete();
-            }
-        }
     }
 }

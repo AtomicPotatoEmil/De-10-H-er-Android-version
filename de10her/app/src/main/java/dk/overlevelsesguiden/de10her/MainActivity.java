@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -32,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        for (File file : getApplicationContext().getFilesDir().listFiles()){
+            if (file.exists()){
+                //Toast.makeText(this, file.getName(), Toast.LENGTH_SHORT).show();
+                file.delete();
+            }
+        }
 
         SharedPreferences loadPreferences = getSharedPreferences("preference", MODE_PRIVATE);
         Gson loadGson = new Gson();

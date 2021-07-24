@@ -50,8 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:text="hello"
-                android:background="@drawable/inserted_text_background"
+                android:background="@drawable/document_title_background"
                 android:textColor="@color/text_primary_color"
                 android:layout_marginTop="16dp"
                 android:id="@+id/title"
@@ -61,7 +60,7 @@
 
             <TextView
                 android:id="@+id/h1_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h1"
@@ -85,7 +84,7 @@
 
             <TextView
                 android:id="@+id/h2_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h2"
@@ -109,7 +108,7 @@
 
             <TextView
                 android:id="@+id/h3_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h3"
@@ -133,7 +132,7 @@
 
             <TextView
                 android:id="@+id/h4_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h4"
@@ -157,7 +156,7 @@
 
             <TextView
                 android:id="@+id/h5_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h5"
@@ -181,7 +180,7 @@
 
             <TextView
                 android:id="@+id/h6_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h6"
@@ -205,7 +204,7 @@
 
             <TextView
                 android:id="@+id/h7_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h7"
@@ -229,7 +228,7 @@
 
             <TextView
                 android:id="@+id/h8_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h8"
@@ -253,7 +252,7 @@
 
             <TextView
                 android:id="@+id/h9_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h9"
@@ -277,7 +276,7 @@
 
             <TextView
                 android:id="@+id/h10_title"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/text_primary_color"
                 android:textSize="24sp"
                 android:text="@string/h10"
