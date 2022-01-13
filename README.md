@@ -1,6 +1,6 @@
 De 10 H'er Android
 
-Denne er er udviklet i samarbejde med https://www.overlevelsesguiden.dk/. Applikationens formål er at hjælpe folk med Autisme, ADHD og andre ligenende profiler med at skabe overblik over planlægning, prioritering og tidstyring ved at svare på de 10 H'er som udgør af spørgsmålene:
+Denne app er udviklet i samarbejde med https://www.overlevelsesguiden.dk/. Applikationens formål er at hjælpe folk med Autisme, ADHD og andre ligenende profiler med at skabe overblik over planlægning, prioritering og tidstyring ved at svare på de 10 H'er som udgør af spørgsmålene:
 
 Hvad skal jeg lave?
 Hvorfor skal jeg lave det?
