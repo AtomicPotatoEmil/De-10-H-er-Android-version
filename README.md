@@ -17,7 +17,7 @@ Folk kan i appen lave et dokument som svare på disse spørgsmål. Det er også 
 
 OBS: Jeg er ikke længere affilieret med den officielle app på Google Play Store. Det er muligt at under læsning af denne README at koden ikke længere repræsentere den seneste version af appen. Opdateringer på Google Play Store fra denne kodebase stoppede med version 1.1.2
 
-![Alt text](https://i.imgur.com/wixG612.png "Pic 1")
+![Alt text](https://i.imgur.com/wixG612.png "Pic 1" width="400")
 
 ![Alt text](https://i.imgur.com/k6aIafz.png "Pic 2")
 
