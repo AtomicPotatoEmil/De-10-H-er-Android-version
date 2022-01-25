@@ -19,8 +19,6 @@ OBS: Jeg er ikke længere affilieret med den officielle app på Google Play Stor
 
 ![Alt text](https://i.imgur.com/wixG612.png "Pic 1")
 
-<a href="url"><img src=https://i.imgur.com/wixG612.png height="48" ></a>
-
 ![Alt text](https://i.imgur.com/k6aIafz.png "Pic 2")
 
 ![Alt text](https://i.imgur.com/BL4KP5S.png "Pic 3")
